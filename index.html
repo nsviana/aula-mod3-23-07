@@ -114,6 +114,164 @@
             Baixe o ZIP com o código fonte, pubspec.yaml e assets
             <a target="_blank" href="app-forms-alunos.zip" style="background-color: red; color: white;">aqui</a>
           </p>
+		  
+		  <p>
+		  <code>
+		  
+		  import 'package:app2/contato.dart';
+import 'package:flutter/material.dart';
+
+class SegundaTela extends StatelessWidget {
+  const SegundaTela({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const SegundaTelaPage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class SegundaTelaPage extends StatefulWidget {
+  const SegundaTelaPage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<SegundaTelaPage> createState() => _SegundaTelaPageState();
+}
+
+class _SegundaTelaPageState extends State<SegundaTelaPage> {
+  List<String> sexo = <String>['Masculino', 'Feminino', 'Outro'];
+  String valorSexo = 'Masculino';
+
+  List<String> tipoContato = <String>['Pessoal', 'Profissional', 'Escola'];
+  String valorTipoContato = 'Pessoal';
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  // Controller para cada um dos campos
+  TextEditingController? nomeController = TextEditingController();
+  TextEditingController? sexoController = TextEditingController();
+  TextEditingController? foneController = TextEditingController();
+  TextEditingController? emailController = TextEditingController();
+  TextEditingController? tipoController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    dynamic telaAnterior = ModalRoute.of(context)!.settings.arguments;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: Form(
+        child: ListView(
+          padding: const EdgeInsets.all(10.0),
+          children: <Widget>[
+            TextFormField(
+              controller: nomeController,
+              decoration: const InputDecoration(
+                labelText: 'Nome',
+                hintText: 'Nome de usuário',
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+              ),
+            ),
+            DropdownButton<String>(
+              items: sexo.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(dropDownStringItem),
+                );
+              }).toList(),
+              value: valorSexo,
+              onChanged: (value) {
+                valorSexo = value!;
+                setState(() {});
+              },
+            ),
+            TextFormField(
+              controller: foneController,
+              decoration: const InputDecoration(
+                labelText: 'Fone',
+                hintText: 'Fone do usuário',
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+              ),
+            ),
+            TextFormField(
+              controller: emailController,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                hintText: 'Email do usuário',
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+              ),
+            ),
+            DropdownButton<String>(
+              items: tipoContato.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(dropDownStringItem),
+                );
+              }).toList(),
+              value: valorTipoContato,
+              onChanged: (value) {
+                valorTipoContato = value!;
+                setState(() {});
+              },
+            ),
+            ElevatedButton(
+              onPressed: () {
+                String imagem = "contato.png";
+                if (valorSexo == sexo[0]) {
+                  imagem = 'assets/usuario-h.png';
+                }
+                if (valorSexo == sexo[1]) {
+                  imagem = 'assets/usuario-m.png';
+                }
+                Contato contato = Contato(
+                    nomeController!.text,
+                    valorSexo,
+                    foneController!.text,
+                    emailController!.text,
+                    valorTipoContato,
+                    imagem);
+                contatos.add(contato);
+                telaAnterior.setState(() {});
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "Salvar",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+		  
+		  </code>
+		  </p>
 
         </div>
 
